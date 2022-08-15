@@ -21,7 +21,7 @@ public class Role extends AbsEntity {
     private String name;
     /*  user ni roli ixtiyoriy admin kiritadi */
     @Enumerated(value = EnumType.STRING)
-    @ElementCollection
+    @ElementCollection(fetch = FetchType.EAGER)
     private List<Huquq> huquqList;
 
 }

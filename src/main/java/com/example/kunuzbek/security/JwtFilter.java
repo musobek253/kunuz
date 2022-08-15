@@ -16,14 +16,12 @@ import java.io.IOException;
 
 @Component
 public class JwtFilter extends OncePerRequestFilter {
-
-    private  final  JwtProvayder jwtProvayder;
-    private final AuthService authService;
     @Autowired(required = false)
-    public JwtFilter(JwtProvayder jwtProvayder, AuthService authService) {
-        this.jwtProvayder = jwtProvayder;
-        this.authService = authService;
-    }
+    private JwtProvayder jwtProvayder;
+    @Autowired(required = false)
+    private AuthService authService;
+
+
 
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
@@ -31,7 +29,7 @@ public class JwtFilter extends OncePerRequestFilter {
         String authorization = request.getHeader("Authorization");
         if (authorization!= null && authorization.startsWith("Bearer")){
             String token = authorization.substring(7);
-            if (jwtProvayder.validateToken(token)){
+
                 String userName = jwtProvayder.getUserNameFromToken(token);
 
                 if(userName!= null){
@@ -41,7 +39,7 @@ public class JwtFilter extends OncePerRequestFilter {
 
                 }
 
-            }
+
         }
         filterChain.doFilter(request, response);
     }

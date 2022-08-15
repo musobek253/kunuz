@@ -1,12 +1,12 @@
 package com.example.kunuzbek.security;
 
-import com.example.kunuzbek.entity.Role;
+
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import org.springframework.stereotype.Component;
 
 import java.util.Date;
-import java.util.Set;
+
 
 @Component
 public class JwtProvayder {
@@ -16,19 +16,18 @@ public class JwtProvayder {
     private static final  String secretKey = "MusobekQudratov2016";
 
 
-    public String generateToken(Role roles, String userName){
+    public String generateToken(
+            String userName){
 
         Date expireDate = new Date(System.currentTimeMillis() + extraTime);
 
-        String token = Jwts
+        return Jwts
                 .builder()
                 .setSubject(userName)
                 .setIssuedAt(new Date())
                 .setExpiration(expireDate)
-                .claim("roles", roles)
                 .signWith(SignatureAlgorithm.HS512, secretKey)
                 .compact();
-        return token;
     }
 
     //token aynan yaroqli va bzniki ekanligini tekshirish
@@ -47,13 +46,12 @@ public class JwtProvayder {
 
     public  String getUserNameFromToken(String token) {
         try {
-            String userName = Jwts
+            return Jwts
                     .parser()
                     .setSigningKey(secretKey)
                     .parseClaimsJws(token)
                     .getBody()
                     .getSubject();
-            return userName;
 
         }catch (Exception e) {
             return null;

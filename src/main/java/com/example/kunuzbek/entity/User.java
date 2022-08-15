@@ -36,7 +36,7 @@ public class User extends AbsEntity implements UserDetails {
     private boolean credentialsNonExpired = true;
     private boolean enabled = false;
 
-    @ManyToOne(fetch = FetchType.LAZY,optional = false)
+    @ManyToOne(fetch = FetchType.EAGER,optional = false)
     private Role role;
 
     @Override

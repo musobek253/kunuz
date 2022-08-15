@@ -21,13 +21,11 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 @EnableWebSecurity
 @EnableGlobalMethodSecurity(prePostEnabled = true)
 public class SecurityConfig{
-    private final JwtFilter jwtFilter;
-    private final AuthService authService;
     @Autowired(required = false)
-    public SecurityConfig(JwtFilter jwtFilter, AuthService authService) {
-        this.jwtFilter = jwtFilter;
-        this.authService = authService;
-    }
+    private JwtFilter jwtFilter;
+    @Autowired(required = false)
+    private  AuthService authService;
+
 
     @Bean
     public PasswordEncoder passwordEncoder() {

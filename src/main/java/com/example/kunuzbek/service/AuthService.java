@@ -16,22 +16,17 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import java.util.Optional;
+
 
 @Service
 public class AuthService implements UserDetailsService {
-    private final UserRepository userRepository;
-    private final RoleRepository roleRepository;
-    private  final PasswordEncoder passwordEncoder;
-
-
     @Autowired(required = false)
-    public AuthService(UserRepository userRepository, RoleRepository roleRepository, PasswordEncoder passwordEncoder) {
+    private UserRepository userRepository;
+    @Autowired(required = false)
+    private  RoleRepository roleRepository;
+    @Autowired(required = false)
+    private  PasswordEncoder passwordEncoder;
 
-        this.userRepository = userRepository;
-        this.roleRepository = roleRepository;
-        this.passwordEncoder = passwordEncoder;
-    }
 
     public ApiResponse registerUser(RegisterDto registerDto) {
         if (!registerDto.getPassword().equals(registerDto.getPrePassword()))
