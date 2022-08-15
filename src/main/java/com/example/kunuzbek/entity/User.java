@@ -4,6 +4,7 @@ import com.example.kunuzbek.entity.enam.Huquq;
 import com.example.kunuzbek.entity.temp.AbsEntity;
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -17,6 +18,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
+@EqualsAndHashCode(callSuper = true)
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
@@ -29,11 +31,13 @@ public class User extends AbsEntity implements UserDetails {
     private String username;
 
     private String password;
+    private boolean accountNonExpired = true;
+    private boolean accountNonLocked = true;
+    private boolean credentialsNonExpired = true;
+    private boolean enabled = false;
 
     @ManyToOne(fetch = FetchType.LAZY,optional = false)
     private Role role;
-
-    private boolean enabled;
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
@@ -48,16 +52,36 @@ public class User extends AbsEntity implements UserDetails {
 
     @Override
     public boolean isAccountNonExpired() {
-        return true;
+        return this.accountNonExpired;
     }
 
     @Override
     public boolean isAccountNonLocked() {
-        return true;
+        return this.accountNonLocked;
     }
 
     @Override
     public boolean isCredentialsNonExpired() {
-        return true;
+        return this.credentialsNonExpired;
+    }
+
+    @Override
+    public boolean isEnabled() {
+        return this.enabled;
+    }
+
+    public User(String fullName, String username, String password, Role role) {
+        this.fullName = fullName;
+        this.username = username;
+        this.password = password;
+        this.role = role;
+    }
+
+    public User(String fullName, String username, String password, boolean enabled, Role role) {
+        this.fullName = fullName;
+        this.username = username;
+        this.password = password;
+        this.enabled = enabled;
+        this.role = role;
     }
 }

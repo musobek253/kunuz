@@ -30,7 +30,7 @@ public abstract class  AbsEntity {
     @ManyToOne(fetch = FetchType.LAZY)
     private User createdUser;
 
-    @JoinColumn(updatable = false)
+
     @LastModifiedBy
     @ManyToOne(fetch = FetchType.LAZY)
     private User updateUser;

@@ -5,12 +5,10 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.validation.constraints.NotNull;
-
-@Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class RegisterDto {
-
+@Data
+public class UserDto {
     @NotNull(message = "fullname bo'sh bo'lmaydi")
     private String fullName;
 
@@ -20,7 +18,6 @@ public class RegisterDto {
     @NotNull(message = "parol bo'sh bo'lmaydi")
     private String password;
 
-    @NotNull(message = "parol bo'sh bo'lmaydi")
-    private String prePassword;
-
+    @NotNull(message = "Lavozim bo'sh bo'lmasin")
+    private int RoleId;
 }

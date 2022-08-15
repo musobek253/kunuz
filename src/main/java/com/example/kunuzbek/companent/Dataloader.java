@@ -6,24 +6,29 @@ import com.example.kunuzbek.entity.enam.Huquq;
 import com.example.kunuzbek.pyload.Appconstantis;
 import com.example.kunuzbek.repo.RoleRepository;
 import com.example.kunuzbek.repo.UserRepository;
+
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.CommandLineRunner;
+import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.stereotype.Component;
 
 import java.util.Arrays;
 
 import static com.example.kunuzbek.entity.enam.Huquq.*;
-
+@Component
 public class Dataloader implements CommandLineRunner {
 
     private final UserRepository userRepository;
     private final RoleRepository roleRepository;
+    private PasswordEncoder passwordEncoder;
 
     @Value("${spring.sql.init.mode}")
     private String initialModeType;
 
-    public Dataloader(UserRepository userRepository, RoleRepository roleRepository) {
+    public Dataloader(UserRepository userRepository, RoleRepository roleRepository,PasswordEncoder passwordEncoder) {
         this.userRepository = userRepository;
         this.roleRepository = roleRepository;
+        this.passwordEncoder = passwordEncoder;
     }
 
 
@@ -44,17 +49,17 @@ public class Dataloader implements CommandLineRunner {
             User AdminSystem = userRepository.save(new User(
                     "Admin",
                     "Admin",
-                    "12345",
-                    Admin,
-                    true
+                    passwordEncoder.encode("12345"),
+                    true,
+                    Admin
             ));
 
             User userapp = userRepository.save(new User(
                     "user",
                     "user",
-                    "12345",
-                    user,
-                    true
+                    passwordEncoder.encode("12345"),
+                    true,
+                    user
             ));
 
         }

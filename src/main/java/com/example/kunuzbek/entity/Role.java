@@ -16,6 +16,7 @@ import java.util.List;
 @NoArgsConstructor
 @Entity
 public class Role extends AbsEntity {
+
     @Column(nullable = false,unique = true)
     private String name;
     /*  user ni roli ixtiyoriy admin kiritadi */
