@@ -7,6 +7,7 @@ import com.example.kunuzbek.pyload.Appconstantis;
 import com.example.kunuzbek.repo.RoleRepository;
 import com.example.kunuzbek.repo.UserRepository;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -17,20 +18,15 @@ import java.util.Arrays;
 import static com.example.kunuzbek.entity.enam.Huquq.*;
 @Component
 public class Dataloader implements CommandLineRunner {
-
-    private final UserRepository userRepository;
-    private final RoleRepository roleRepository;
+    @Autowired(required = false)
+    private  UserRepository userRepository;
+    @Autowired(required = false)
+    private  RoleRepository roleRepository;
+    @Autowired(required = false)
     private PasswordEncoder passwordEncoder;
 
     @Value("${spring.sql.init.mode}")
     private String initialModeType;
-
-    public Dataloader(UserRepository userRepository, RoleRepository roleRepository,PasswordEncoder passwordEncoder) {
-        this.userRepository = userRepository;
-        this.roleRepository = roleRepository;
-        this.passwordEncoder = passwordEncoder;
-    }
-
 
     @Override
     public void run(String... args) throws Exception {
@@ -46,7 +42,7 @@ public class Dataloader implements CommandLineRunner {
                     Arrays.asList(ADD_COMMENT, DELETE_MY_COMMENT, EDIT_COMMENT)
             ));
 
-            User AdminSystem = userRepository.save(new User(
+            User admin= userRepository.save(new User(
                     "Admin",
                     "Admin",
                     passwordEncoder.encode("12345"),

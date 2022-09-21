@@ -6,8 +6,10 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.util.List;
 
 @EqualsAndHashCode(callSuper = true)
@@ -15,10 +17,13 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-public class Role extends AbsEntity {
+@EntityListeners(AuditingEntityListener.class)
+
+public class Role extends AbsEntity  implements Serializable {
 
     @Column(nullable = false,unique = true)
     private String name;
+
     /*  user ni roli ixtiyoriy admin kiritadi */
     @Enumerated(value = EnumType.STRING)
     @ElementCollection(fetch = FetchType.EAGER)
